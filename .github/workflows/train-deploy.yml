@@ -92,4 +92,4 @@ jobs:
 
       - name: Notify success (optional)
         if: success()
-        run: echo "✅ Pipeline completed: Model trained and Docker image pushed to GHCR."
+        run: echo " Pipeline completed: Model trained and Docker image pushed to GHCR."
