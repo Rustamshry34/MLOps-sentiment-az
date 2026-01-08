@@ -1,1 +1,32 @@
+stages:
+  get_data:
+    cmd: python src/data/load_data.py
+    deps:
+      - src/data/load_data.py
+    outs:
+      - data/raw/train.csv
+      - data/raw/test.csv
 
+  preprocess:
+    cmd: python src/preprocessing/text_cleaning.py
+    deps:
+      - src/preprocessing/text_cleaning.py
+      - data/raw/train.csv
+      - data/raw/test.csv
+    outs:
+      - data/processed/train_cleaned.csv
+      - data/processed/test_cleaned.csv
+
+  train:
+    cmd: python src/models/train_model.py
+    deps:
+      - src/models/train_model.py
+      - src/features/build_features.py
+      - data/processed/train_cleaned.csv
+      - config/model_config.yaml
+    outs:
+      - models/sklearn_model.pkl
+      - models/tfidf_vectorizer.pkl
+    metrics:
+      - metrics.json:
+          cache: false
