@@ -11,11 +11,11 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Hugging Face raw CSV URLs
-    base_url = "https://huggingface.co/datasets/hajili/azerbaijani_review_sentiment_classification/resolve/main/data"
+    base_url = "hf://datasets/hajili/azerbaijani_review_sentiment_classification/"
     
     splits = {
-        "train": f"{base_url}/train.csv",
-        "test": f"{base_url}/test.csv"
+        "train": f"{base_url}train.csv",
+        "test": f"{base_url}test.csv"
     }
 
     for split_name, url in splits.items():
