@@ -39,6 +39,11 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Initialize DVC repository
+        run: |
+          dvc init --no-scm  # --no-scm: çünkü zaten git reposuyuz
+          dvc config core.autostage true  # isteğe bağlı: .dvc dosyalarını otomatik stage'ler
+
       - name: Pull data with DVC
         run: |
           dvc pull
