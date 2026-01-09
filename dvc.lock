@@ -1,1 +1,6 @@
+# Mevcut dvc.lock ve .dvc/ içeriğini temizle (opsiyonel)
+rm -f dvc.lock
+# dvc.yaml'iniz doğru olduğundan emin olun
 
+# Pipeline'ı çalıştır → dvc.lock otomatik oluşur
+dvc repro
