@@ -6,15 +6,15 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Union
 import numpy as np
-from src.inference.model_loader import load_model_and_vectorizer
+from src.inference.model_loader import load_model_and_vectorizer_from_registry
 from src.preprocessing.text_cleaning import clean_text  # Aynı preprocessing!
 
 # Model ve vectorizer global olarak yüklenir (sunucu başlatıldığında bir kez)
 try:
-    model, vectorizer = load_model_and_vectorizer()
+    model, vectorizer = load_model_and_vectorizer_from_registry(stage="Production")
     app = FastAPI(title="Azerbaijani Sentiment Analysis API", version="1.0")
 except Exception as e:
-    raise RuntimeError(f"Failed to load model or vectorizer: {e}")
+    raise RuntimeError(f"Failed to initialize model from MLflow: {e}")
 
 class PredictionRequest(BaseModel):
     texts: Union[str, List[str]]
