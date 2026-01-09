@@ -95,11 +95,8 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: "file://./mlruns"
         run: |
-          python scripts/promote_model.py --threshold 0.75
+          python scripts/promote_model.py --threshold 0.85
 
-      - name: Notify success (optional)
-        if: success()
-        run: echo "✅ Pipeline completed: Model trained and Docker image pushed to GHCR." 
 
 
           
