@@ -14,6 +14,7 @@ jobs:
     env:
       PYTHON_VERSION: "3.10"
       MLFLOW_TRACKING_URI: "file://./mlruns"
+      PYTHONPATH: "${{ github.workspace }}"  
 
     steps:
       - name: Checkout code
