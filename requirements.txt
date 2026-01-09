@@ -6,4 +6,5 @@ numpy>=2.2.6
 fastapi>=0.124.0
 regex>=2024.9.11
 uvicorn>=0.38.0
-dvc[all]==3.50.2
+dvc[all]>=3.50.2
+huggingface_hub>=0.36.0
