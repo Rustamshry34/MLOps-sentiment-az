@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir --user -r requirements.txt
 
 # Kodu ve modelleri kopyala
 COPY src/ ./src/
-COPY models/ ./models/
+
 
 # Sahipliği düzenle
 RUN chown -R app:app ./src ./models
