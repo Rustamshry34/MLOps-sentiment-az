@@ -108,8 +108,17 @@ def main():
         mlflow.log_artifact("metrics/classification_report.json")
 
         # --- Model ve vectorizer'ı MLflow'a kaydet ---
-        mlflow.sklearn.log_model(model, "model")
         mlflow.log_artifact(vectorizer_path, "vectorizer")
+        
+        # --- MLflow Model Registry'ye kaydet ---
+        registered_model_name = "az_sentiment_nb"
+        mlflow.sklearn.log_model(
+            sk_model=model,
+            artifact_path="model",
+            registered_model_name=registered_model_name
+        )
+
+        print(f"Model registered as '{registered_model_name}' in MLflow Model Registry.")
 
         # --- DVC için metrics.json ---
         metrics_dir = Path("metrics")
