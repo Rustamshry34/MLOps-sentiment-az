@@ -44,11 +44,6 @@ jobs:
           dvc init --no-scm  # --no-scm: çünkü zaten git reposuyuz
           dvc config core.autostage true  # isteğe bağlı: .dvc dosyalarını otomatik stage'ler
 
-      - name: Pull data with DVC
-        run: |
-          dvc pull
-          # Alternatif: dvc pull data/raw/train.csv.dvc (spesifik dosya)
-
       - name: Run DVC pipeline (train model)
         run: |
           dvc repro
