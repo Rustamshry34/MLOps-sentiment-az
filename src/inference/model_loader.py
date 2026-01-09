@@ -1,31 +1,47 @@
 """
-Model ve TF-IDF vektörleştiriciyi diskten yükler.
-İleride MLflow model URI desteği eklenebilir.
+MLflow Model Registry'den model ve vectorizer'ı yükler.
+Vectorizer da MLflow artifact'i olarak kaydedildiği için oradan alınır.
 """
 
-import joblib
+import mlflow
 from pathlib import Path
-from sklearn.base import BaseEstimator
+import tempfile
+import joblib
 
-def load_model_and_vectorizer(
-    model_path: str = "models/sklearn_model.pkl",
-    vectorizer_path: str = "models/tfidf_vectorizer.pkl"
-) -> tuple[BaseEstimator, object]:
+# MLflow tracking URI — production'da remote olabilir
+MLFLOW_TRACKING_URI = "file://./mlruns"
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+
+def load_model_and_vectorizer_from_registry(
+    model_name: str = "az_sentiment_nb",
+    stage: str = "Production"  # veya "Staging", "None"
+):
     """
-    Eğitilmiş modeli ve TF-IDF vektörleştiriciyi yükler.
-
-    Returns:
-        tuple: (model, vectorizer)
+    MLflow Model Registry'den belirtilen stage'deki modeli ve vectorizer'ı yükler.
     """
-    model_path = Path(model_path)
-    vectorizer_path = Path(vectorizer_path)
+    try:
+        # Model URI'sini al
+        model_uri = f"models:/{model_name}/{stage}"
+        print(f"Loading model from URI: {model_uri}")
 
-    if not model_path.exists():
-        raise FileNotFoundError(f"Model file not found: {model_path}")
-    if not vectorizer_path.exists():
-        raise FileNotFoundError(f"Vectorizer file not found: {vectorizer_path}")
+        # Modeli yükle
+        model = mlflow.sklearn.load_model(model_uri)
 
-    model = joblib.load(model_path)
-    vectorizer = joblib.load(vectorizer_path)
+        # Vectorizer artifact'ini yükle
+        model_info = mlflow.models.get_model_info(model_uri)
+        run_id = model_info.run_id
 
-    return model, vectorizer
+        with tempfile.TemporaryDirectory() as tmpdir:
+            # Vectorizer'ı artifact'ten indir
+            mlflow.artifacts.download_artifacts(
+                run_id=run_id,
+                artifact_path="vectorizer/tfidf_vectorizer.pkl",
+                dst_path=tmpdir
+            )
+            vectorizer_path = Path(tmpdir) / "tfidf_vectorizer.pkl"
+            vectorizer = joblib.load(vectorizer_path)
+
+        return model, vectorizer
+
+    except Exception as e:
+        raise RuntimeError(f"Failed to load model/vectorizer from MLflow registry: {e}")
