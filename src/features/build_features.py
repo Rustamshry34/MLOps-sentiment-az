@@ -30,6 +30,13 @@ def load_config(config_path: str = "config/model_config.yaml"):
 def create_tfidf_vectorizer(config: dict):
     """YAML konfigürasyonuna göre TF-IDF vektörleştirici oluşturur."""
     tfidf_params = config["feature_engineering"]["vectorizer"]["params"]
+
+    if "ngram_range" in tfidf_params:
+        ngram_str = tfidf_params["ngram_range"]
+        if isinstance(ngram_str, str):
+            ngram_tuple = tuple(map(int, ngram_str.split(",")))
+            tfidf_params["ngram_range"] = ngram_tuple
+    
     # Stopwords listesini parametrelere ekle
     tfidf_params["stop_words"] = AZERBAIJANI_STOPWORDS
     vectorizer = TfidfVectorizer(**tfidf_params)
