@@ -103,7 +103,11 @@ def main():
 
         # Sınıflandırma raporu (opsiyonel: artifact olarak)
         report = classification_report(y_test, y_pred, output_dict=True)
-        with open("metrics/classification_report.json", "w") as f:
+        
+        metrics_dir = Path("metrics")
+        metrics_dir.mkdir(exist_ok=True)
+        
+        with open(metrics_dir / "classification_report.json", "w") as f:
             json.dump(report, f, indent=2)
         mlflow.log_artifact("metrics/classification_report.json")
 
