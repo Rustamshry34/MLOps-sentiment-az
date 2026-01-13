@@ -49,6 +49,7 @@ def fit_and_save_vectorizer(train_texts, output_path: str, config_path: str = "c
     config = load_config(config_path)
     vectorizer = create_tfidf_vectorizer(config)
     vectorizer.fit(train_texts)
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(vectorizer, output_path)
     print(f"Vectorizer saved to {output_path}")
     return vectorizer
