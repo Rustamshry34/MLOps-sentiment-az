@@ -30,7 +30,7 @@ def main():
     train_config = config["training"]
 
     # --- MLflow ayarları ---
-    mlflow.set_tracking_uri("file://./mlruns")  # GitHub Actions'ta lokal tracking
+    mlflow.set_tracking_uri("http://ec2-13-61-180-100.eu-north-1.compute.amazonaws.com:5000/")  # GitHub Actions'ta lokal tracking
     mlflow.set_experiment("az_sentiment_nb")
 
     with mlflow.start_run():
