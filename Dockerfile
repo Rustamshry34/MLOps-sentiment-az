@@ -1,23 +1,21 @@
-# Stage 1: Build — sadece inference için gerekli dosyaları kopyala
+# Minimal Python image for inference
 FROM python:3.10-slim
 
 # Güvenlik: non-root kullanıcı oluştur
 RUN useradd --create-home --shell /bin/bash app && \
     chown -R app:app /home/app
 
-# Çalışma dizinini ayarla
 WORKDIR /home/app
 
-# Bağımlılıkları kopyala ve yükle (cache avantajı için önce requirements)
+# Bağımlılıkları yükle (cache optimizasyonu için önce requirements)
 COPY requirements.txt .
 RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Kodu ve modelleri kopyala
+# Sadece kaynak kodu kopyala (models/ KOPYALANMAZ!)
 COPY src/ ./src/
 
-
 # Sahipliği düzenle
-RUN chown -R app:app ./src ./models
+RUN chown -R app:app ./src
 
 # Non-root kullanıcı ile çalıştır
 USER app
