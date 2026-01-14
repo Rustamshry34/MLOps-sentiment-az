@@ -4,10 +4,10 @@ import argparse
 import mlflow
 from mlflow.tracking import MlflowClient
 
-os.getenv("HF_TOKEN")
+mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
 
 def main(threshold: float):
-    mlflow.set_tracking_uri("http://ec2-13-61-180-100.eu-north-1.compute.amazonaws.com:5000/")
+    mlflow.set_tracking_uri(mlflow_uri)
     client = MlflowClient()
 
     # En son run'ı bul
