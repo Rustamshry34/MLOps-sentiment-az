@@ -3,6 +3,7 @@ import json
 import argparse
 import mlflow
 from mlflow.tracking import MlflowClient
+import os 
 
 mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
 
