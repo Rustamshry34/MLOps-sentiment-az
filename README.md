@@ -1,1 +1,1 @@
-
+[![Train and Deploy Azerbaijani Sentiment Model](https://github.com/Rustamshry34/MLOps-sentiment-az/actions/workflows/train-deploy.yml/badge.svg)](https://github.com/Rustamshry34/MLOps-sentiment-az/actions/workflows/train-deploy.yml)
