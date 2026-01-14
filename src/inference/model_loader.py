@@ -7,6 +7,7 @@ import mlflow
 from pathlib import Path
 import tempfile
 import joblib
+import os 
 
 # MLflow tracking URI — production'da remote olabilir
 mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
