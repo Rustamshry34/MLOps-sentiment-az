@@ -28,5 +28,5 @@ stages:
       - models/sklearn_model.pkl
       - models/tfidf_vectorizer.pkl
     metrics:
-      - metrics.json:
+      - metrics/metrics.json:
           cache: false
