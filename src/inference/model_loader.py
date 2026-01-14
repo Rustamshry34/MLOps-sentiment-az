@@ -9,8 +9,8 @@ import tempfile
 import joblib
 
 # MLflow tracking URI — production'da remote olabilir
-MLFLOW_TRACKING_URI = "http://ec2-13-61-180-100.eu-north-1.compute.amazonaws.com:5000/"
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
+mlflow.set_tracking_uri(mlflow_uri)
 
 def load_model_and_vectorizer_from_registry(
     model_name: str = "az_sentiment_nb",
