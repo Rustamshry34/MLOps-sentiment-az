@@ -5,6 +5,7 @@ MLflow entegrasyonu ile deney takibi ve model kayıt defteri desteği içerir.
 
 import json
 import pandas as pd
+import os
 import numpy as np
 from pathlib import Path
 import joblib
@@ -30,7 +31,8 @@ def main():
     train_config = config["training"]
 
     # --- MLflow ayarları ---
-    mlflow.set_tracking_uri("http://ec2-13-61-180-100.eu-north-1.compute.amazonaws.com:5000/")  # GitHub Actions'ta lokal tracking
+    mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
+    mlflow.set_tracking_uri(mlflow_uri)  # GitHub Actions'ta lokal tracking
     mlflow.set_experiment("az_sentiment_nb")
 
     with mlflow.start_run():
