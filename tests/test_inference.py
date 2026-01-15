@@ -6,6 +6,8 @@ Bu test, DVC pipeline'ı çalıştıktan sonra (dvc repro) geçerli olur.
 import joblib
 from pathlib import Path
 import sys
+import numpy as np
+
 
 # src'yi PYTHONPATH'a ekle (test bağımsız çalışmalı)
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
@@ -38,7 +40,7 @@ def test_inference_loads_and_predicts():
     # Tahmin mantıklı mı?
     assert pred.shape == (1,)
     assert proba.shape[0] == 1
-    assert proba.sum() == 1.0  # Olasılıklar toplamı 1
+    assert np.isclose(proba.sum(), 1.0, atol=1e-8)
 
     print(f"✅ Test passed: '{raw_text}' → prediction={pred[0]}, proba={proba[0].round(3)}")
 
