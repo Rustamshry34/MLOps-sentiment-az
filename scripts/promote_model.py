@@ -37,7 +37,6 @@ def main(threshold: float):
         if version:
             client.set_registered_model_alias(
                 name=model_name,
-                version=version,
                 alias="production",
                 version=version,
             )
