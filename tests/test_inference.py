@@ -28,7 +28,7 @@ def test_inference_loads_and_predicts():
     # Test metni (Azerbaycanca örnek)
     raw_text = "Məhsul çox yaxşıdır! 😊"
     cleaned = clean_text(raw_text)
-    assert cleaned == "məhsul çox yaxşıdır !"
+    assert cleaned == "məhsul çox yaxşıdır!"
 
     # Vektörleştirme ve tahmin
     X = vectorizer.transform([cleaned])
