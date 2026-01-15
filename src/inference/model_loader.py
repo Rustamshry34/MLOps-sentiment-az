@@ -15,14 +15,14 @@ mlflow.set_tracking_uri(mlflow_uri)
 
 def load_model_and_vectorizer_from_registry(
     model_name: str = "az_sentiment_nb",
-    stage: str = "@prod" 
+    alias: str = "production" 
 ):
     """
     MLflow Model Registry'den belirtilen stage'deki modeli ve vectorizer'ı yükler.
     """
     try:
         # Model URI'sini al
-        model_uri = f"models:/{model_name}/{stage}"
+        model_uri = f"models:/{model_name}@{alias}"
         print(f"Loading model from URI: {model_uri}")
 
         # Modeli yükle
