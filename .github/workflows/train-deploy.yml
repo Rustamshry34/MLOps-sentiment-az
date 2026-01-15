@@ -102,6 +102,33 @@ jobs:
         run: |
           python scripts/promote_model.py --threshold 0.85
 
+      - name: Deploy to AWS EC2
+        if: github.ref == 'refs/heads/main'
+        env:
+          EC2_HOST: ${{ secrets.EC2_PUBLIC_IP }}
+          EC2_USER: ubuntu
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-north-1
+        run: |
+          # Docker image'i EC2'ye çek ve başlat
+          ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+            docker stop az-sentiment-api || true
+            docker rm az-sentiment-api || true
+            docker rmi ghcr.io/rustamshry34/mlops-sentiment-az/az-sentiment-api:latest || true
+            docker pull ghcr.io/rustamshry34/mlops-sentiment-az/az-sentiment-api:latest
+            docker run -d \
+              --name az-sentiment-api \
+              -p 8000:8000 \
+              -e MLFLOW_TRACKING_URI="$MLFLOW_TRACKING_URI" \
+              -e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+              -e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
+              -e AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION" \
+              ghcr.io/rustamshry34/mlops-sentiment-az/az-sentiment-api:latest
+          EOF
+
+
 
 
           
