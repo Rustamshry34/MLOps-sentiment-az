@@ -15,7 +15,7 @@ mlflow.set_tracking_uri(mlflow_uri)
 
 def load_model_and_vectorizer_from_registry(
     model_name: str = "az_sentiment_nb",
-    stage: str = "Production"  # veya "Staging", "None"
+    stage: str = "@prod" 
 ):
     """
     MLflow Model Registry'den belirtilen stage'deki modeli ve vectorizer'ı yükler.
