@@ -9,7 +9,7 @@ WORKDIR /home/app
 
 # Bağımlılıkları yükle (cache optimizasyonu için önce requirements)
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Sadece kaynak kodu kopyala (models/ KOPYALANMAZ!)
 COPY src/ ./src/
