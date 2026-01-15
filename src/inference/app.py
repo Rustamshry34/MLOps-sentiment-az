@@ -11,7 +11,7 @@ from src.preprocessing.text_cleaning import clean_text  # Aynı preprocessing!
 
 # Model ve vectorizer global olarak yüklenir (sunucu başlatıldığında bir kez)
 try:
-    model, vectorizer = load_model_and_vectorizer_from_registry(stage="Production")
+    model, vectorizer = load_model_and_vectorizer_from_registry(stage="@prod")
     app = FastAPI(title="Azerbaijani Sentiment Analysis API", version="1.0")
 except Exception as e:
     raise RuntimeError(f"Failed to initialize model from MLflow: {e}")
