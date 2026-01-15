@@ -35,18 +35,11 @@ def main(threshold: float):
                 break
 
         if version:
-            # Staging'e geç (önce varsa)
-            client.transition_model_version_stage(
+            client.set_registered_model_alias(
                 name=model_name,
                 version=version,
-                stage="Staging"
-            )
-            # Production'a geç
-            client.transition_model_version_stage(
-                name=model_name,
+                alias="production",
                 version=version,
-                stage="Production",
-                archive_existing_versions=True
             )
             print(f"✅ Model v{version} promoted to Production (test_acc={test_acc:.4f})")
         else:
