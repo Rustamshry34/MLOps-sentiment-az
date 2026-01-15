@@ -56,6 +56,9 @@ jobs:
         run: |
           dvc repro
 
+      - name: Run Pytest for inference and model
+        run: python -m pytest tests/test_inference.py -v
+        
       - name: Save metrics as artifact
         uses: actions/upload-artifact@v4
         with:
