@@ -9,14 +9,14 @@ import tempfile
 import joblib
 import os 
 
-# MLflow tracking URI — production'da remote olabilir
-mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
-mlflow.set_tracking_uri(mlflow_uri)
-
 def load_model_and_vectorizer_from_registry(
     model_name: str = "az_sentiment_nb",
     alias: str = "production" 
 ):
+    # MLflow tracking URI — production'da remote olabilir
+    mlflow_uri = os.getenv("MLFLOW_TRACKING_URI")
+    mlflow.set_tracking_uri(mlflow_uri)
+    
     """
     MLflow Model Registry'den belirtilen stage'deki modeli ve vectorizer'ı yükler.
     """
