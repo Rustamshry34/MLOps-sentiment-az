@@ -6,8 +6,20 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Union
 import numpy as np
+import os
 from src.inference.model_loader import load_model_and_vectorizer_from_registry
 from src.preprocessing.text_cleaning import clean_text  # Aynı preprocessing!
+
+# --------------------------------------------------
+# MLflow configuration (KRİTİK)
+# --------------------------------------------------
+
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
+if not MLFLOW_TRACKING_URI:
+    raise RuntimeError("MLFLOW_TRACKING_URI environment variable is not set")
+
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+print("MLFLOW_TRACKING_URI", mlflow.get_tracking_uri())
 
 # Model ve vectorizer global olarak yüklenir (sunucu başlatıldığında bir kez)
 try:
