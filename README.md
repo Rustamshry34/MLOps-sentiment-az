@@ -42,5 +42,4 @@ This project implements a production-grade, fully automated MLOps pipeline for s
  - Secure deployment:
     - EC2 instance uses an IAM role (no hardcoded credentials)
     - Docker container runs as a non-root user
-Reproducibility: Fixed Python version (3.10), pinned dependencies, and DVC-managed data.
-📦 Key Files & Structure
+ - Reproducibility: Fixed Python version (3.10), pinned dependencies, and DVC-managed data.
