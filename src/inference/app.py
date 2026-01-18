@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Union
 import numpy as np
+import mlflow
 import os
 from src.inference.model_loader import load_model_and_vectorizer_from_registry
 from src.preprocessing.text_cleaning import clean_text  # Aynı preprocessing!
